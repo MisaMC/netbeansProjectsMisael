@@ -5,6 +5,9 @@
  */
 package gestordeagenda;
 import java.io.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 /**
  *
  * @author Usuario
@@ -28,9 +31,42 @@ public class Agenda implements Serializable {
    String res="";
        for (int i = 0; i < num; i++) {
            res += elArray[i] +"\n";
-           res += "----------------";
+           res += "*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*"+ "\n";
         }
           return res;
    }
    
+   public void guardarAgenda(String fich){
+       try {
+           ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(new File(fich)));
+           oos.writeObject(this);
+           oos.close(); 
+       } catch (FileNotFoundException ex) {
+           JOptionPane.showMessageDialog(null,"File Not Found"+ ex.getMessage());
+       } catch (IOException ex) {
+         JOptionPane.showMessageDialog(null,"IOEXEPTION"+ ex.getMessage());
+       }
+   }
+      
+       public static Agenda leerAgenda(String fich){
+       Agenda aux = null;
+       try {
+           ObjectInputStream ois = new ObjectInputStream(new FileInputStream(fich));
+           aux =(Agenda) ois.readObject();
+           ois.close();
+       } catch (FileNotFoundException ex) {
+        JOptionPane.showMessageDialog(null,"File Not Found"+ ex.getMessage());
+       } catch (IOException ex) {
+           JOptionPane.showMessageDialog(null,"IOEXEPTION"+ ex.getMessage());
+       } catch (ClassNotFoundException ex) {
+           JOptionPane.showMessageDialog(null,"Class Not Found "+ ex.getMessage());
+       }
+       return aux;
+       }
+       
+       /*
+       Escribir dos metodos de busqueda de uno por nombre y otro por telefono.
+       Ambas operaciones devolveran el primer ItemAgenda que cumpla ,a con la condicion en caso 
+       Que exista o null en el caso que no sea asi
+       */
 }
