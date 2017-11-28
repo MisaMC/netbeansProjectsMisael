@@ -47,8 +47,13 @@ public class ApiRequest {
             Double latitude = (Double)jObject.get("latitude");
             Double longitude = (Double)jObject.get("longitude");
             String timezone = (String)jObject.get("timezone");
-            System.out.println(latitude+" "+longitude+" "+timezone);
             
+            JSONObject c = (JSONObject) jObject;
+            Object cu = (Object)c.get("currently");
+            JSONObject cur= (JSONObject)c.get("currently");
+            String Summary = (String) cur.get("summary");
+            String Icon = (String)cur.get("icon");
+            System.out.println(latitude+" "+longitude+" "+timezone+" "+ Icon+" "+Summary);
             
         } catch (MalformedURLException ex) {
             JOptionPane.showMessageDialog(null,"Verificar: "+ ex.getMessage());
